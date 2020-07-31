@@ -1,4 +1,5 @@
-# [<img src="src/img/logo.png" alt="">]https://x.js.org/) Execute JS (xJS)
+[<img width=256 src="src/img/logo.png" alt="">](https://x.js.org/)
+# Execute JS (x.JS)
 
 A live editor like browser console to test your JS code live in your browser.
 
