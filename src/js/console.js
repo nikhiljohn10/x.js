@@ -1,8 +1,12 @@
 /*!
- * Console.JS v0.0.1 (https://console.js.org/)
+ * Console.JS v0.0.1 (https://x.js.org/)
  * Author Nikhil John
- * Licensed under MIT (https://github.com/nikhiljohn10/console.js.org/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/nikhiljohn10/x.js.org/blob/master/LICENSE)
  */
+
+const input = document.querySelector('#input')
+const output = document.querySelector('#output')
+
 const addClass = (selector, classList) => {
   const element = document.querySelector(selector);
   const classes = classList.split(' ')
@@ -40,16 +44,17 @@ console.error = (error) => {
 
 window.onkeyup = (event) => {
   if (needSaved(event)) {
-    uriContent = "data:text/javascript," + encodeURIComponent(input.value)
-    newWindow = window.open(uriContent, 'script.js');
+    alert("worked")
+    const uriContent = "data:text/javascript," + encodeURIComponent(input.value)
+    const newWindow = window.open(uriContent, 'script.js')
   }
 }
 
+window.onload = (event) => {
+  input.focus()
+}
 
 (() => {
-  const input = document.querySelector('#input');
-  const output = document.querySelector('#output');
-
   const execute = () => {
     try {
       removeClass('#output', 'error')
@@ -61,6 +66,6 @@ window.onkeyup = (event) => {
     }
   }
 
-  input.onkeyup = execute;
-  execute()
+  input.onkeyup = execute
+  console.log('/*\nWelcome to Execute JS\nYou can test your js script in the above text editor.\nThe code is executed live as it does in browser console.\nAll the console logs and errors are printed here.\n*/')
 })()

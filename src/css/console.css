@@ -1,7 +1,7 @@
 /*!
- * Console.JS v0.0.1 (https://console.js.org/)
+ * Console.JS v0.0.1 (https://x.js.org/)
  * Author Nikhil John
- * Licensed under MIT (https://github.com/nikhiljohn10/console.js.org/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/nikhiljohn10/x.js.org/blob/master/LICENSE)
  */
 * {
   box-sizing: border-box;
@@ -13,11 +13,10 @@ body {
   padding: 0;
 }
 
-h2 {
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-}
-
-a, a:active, a:hover, a:visited {
+a,
+a:active,
+a:hover,
+a:visited {
   color: #999;
   letter-spacing: 2px;
 }
@@ -25,6 +24,27 @@ a, a:active, a:hover, a:visited {
 a:hover {
   color: #444;
 }
+
+div.header {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+div.header>a {
+  padding-left: 10px;
+}
+
+.logo {
+  height: 64px;
+  vertical-align: baseline;
+  margin-right: 1rem;
+}
+
 
 div.code-toolbar pre {
   box-shadow: 0.3em 0.3em 0.7em rgba(0, 0, 0, 0.4);
@@ -57,15 +77,19 @@ div.container {
 }
 
 @keyframes octocat-wave {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: rotate(0)
   }
 
-  20%, 60% {
+  20%,
+  60% {
     transform: rotate(-25deg)
   }
 
-  40%, 80% {
+  40%,
+  80% {
     transform: rotate(10deg)
   }
 }
