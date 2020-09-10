@@ -63,6 +63,10 @@ pre.code {
   height: 30vh;
 }
 
+#output.assert {
+  color: #e89e11;
+}
+
 #output.error {
   color: #e54343;
 }
