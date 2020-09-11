@@ -6,6 +6,20 @@
 
 const input = document.querySelector('#input')
 const output = document.querySelector('#output')
+let consoleErrorLock = false
+
+const print = (text) => {
+  output.textContent = text + '\n'
+}
+
+const log = (text) => {
+  if (!consoleErrorLock) output.textContent += text + '\n'
+}
+
+const clearAll = () => {
+  consoleErrorLock = false
+  output.textContent = ''
+}
 
 const addClass = (selector, classList) => {
   const element = document.querySelector(selector);
@@ -80,36 +94,43 @@ const processArgs = (args, asserted) => {
 }
 
 console.clear = () => {
-  output.textContent = ""
+  clearAll()
 }
 
 console.log = function() {
   const message = processArgs(arguments, false)
-  output.textContent += message + '\n'
+  log(message)
 }
 
 console.assert = function() {
   if (!arguments[0]) {
     addClass('#output', 'assert')
     const message = processArgs(arguments, true)
-    output.textContent += 'Assertion failed: ' + message + '\n'
+    log('Assertion failed: ' + message)
   }
 }
 
-console.test = function(fn) {
-  let e
-  try {
-    fn()
-  } catch (x) {
-    e = x
-  } finally {
-    console.error('Error inside function: ' + fn.toString())
+console.test = function() {
+  const name = arguments[0]
+  if (typeof name != 'string') {
+    console.error("Error: Invalid argument. Syntax => console.test(name, test_1 [, ... , test_n])")
+    return false
   }
+  for (let i = 1; i < arguments.length; i++) {
+    if (!arguments[i]) {
+      addClass('#output', 'assert')
+      log('Test \''+ name +'\' failed at sub test: ' + i)
+      return false
+    }
+  }
+  log('Test \''+name+'\' is passed')
+  return true
 }
 
 console.error = (error) => {
-  console.clear()
-  output.textContent +=  error + '\n'
+  addClass('#output', 'error')
+  log(error)
+  consoleErrorLock = true
 }
 
 window.onkeyup = (event) => {
@@ -130,10 +151,17 @@ window.onload = (event) => {
       removeClass('#output', 'error')
       removeClass('#output', 'assert')
       console.clear()
-      eval(input.value)
+      Function(input.value)()
     } catch (err) {
-      addClass('#output', 'error')
-      console.error('Error on line ' + err.lineNumber + ': ' + err.message)
+      const lineCorrectionExpr = /^missing [\)\]\}]|^expected expression, got \'[\)\]\}]\'/
+      let errorStack = err.stack.trim()
+      let lineNumber = (lineCorrectionExpr.test(err.message)) ? err.lineNumber - 3 : (err.lineNumber - 2)
+      if (/^Error/.test(errorStack)) {
+        errorStack = errorStack.replace(/^[Ee]rror/, '')
+      } else {
+        errorStack = '\tat ' + errorStack.replace(/\n/g, '\n\tat ')
+      }
+      console.error(err.name + ' at line ' + lineNumber + ' : ' + err.message + '\n' + errorStack)
     }
   }
 
